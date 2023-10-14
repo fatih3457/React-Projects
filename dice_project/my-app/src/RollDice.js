@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Dice from './Dice.js'
+import './RollDice.css'
 
 class RollDice extends Component {
     static defaultProps = {
