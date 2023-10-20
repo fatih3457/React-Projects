@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { choice } from './Helpers'
 
 class CoinContainer extends Component {
     static defaultProps = {
@@ -21,11 +22,33 @@ class CoinContainer extends Component {
           nTails: 0,
           nHeads: 0,  
         }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    flipCoin() {
+        const newCoin = choice(this.props.coins)
+        this.setState((st) => {
+            return {
+                currCoin: newCoin,
+                nFlips: st.nFlips + 1,
+                nHeads: st.nHeads + 1,
+                nTails: st.nTails + 1,
+            }
+        })
+    }
+
+    handleClick(e) {
+        this.flipCoin()
     }
     render() {
         return (
             <div>
                 <h1>Coin Toss Game</h1>
+                <button onClick={this.handleClick}>Toss!</button>
+                <p>
+                   Yapilan toplam firlatma {this.state.nFlips}, bunlarin {' '}
+                    {this.state.nTails} ve {this.state.nHeads} tanesi de turadir.  
+                </p>
             </div>
         )
     }
