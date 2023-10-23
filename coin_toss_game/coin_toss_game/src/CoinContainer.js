@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { choice } from './Helpers'
+import Coin from './Coin'
+import './CoinContainer.css'
 
 class CoinContainer extends Component {
     static defaultProps = {
         coins: [
             {
-                side: "tails",
+                side: "heads",
                 imgSrc: "https://upload.wikimedia.org/wikipedia/commons/6/64/1TL_obverse.png"
             },
             {
-                side: "heads",
+                side: "tails",
                 imgSrc: "https://play-lh.googleusercontent.com/XqQPFaIqg5vEiB316LM5eOHThuZHt1ZIVleJ0_hX4LrhJdG6le951ybCszG0w5AKl_-i"
             },
         ],
@@ -19,8 +21,8 @@ class CoinContainer extends Component {
         this.state = {
           currCoin: null,
           nFlips: 0,
-          nTails: 0,
           nHeads: 0,  
+          nTails: 0,
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -31,8 +33,8 @@ class CoinContainer extends Component {
             return {
                 currCoin: newCoin,
                 nFlips: st.nFlips + 1,
-                nHeads: st.nHeads + 1,
-                nTails: st.nTails + 1,
+                nHeads: st.nHeads + (newCoin.side === 'heads' ? 1 : 0 ),
+                nTails: st.nTails + (newCoin.side === 'tails' ? 1 : 0 ),
             }
         })
     }
@@ -42,12 +44,13 @@ class CoinContainer extends Component {
     }
     render() {
         return (
-            <div>
+            <div className='CoinContainer'>
                 <h1>Coin Toss Game</h1>
+                {this.state.currCoin && <Coin info={this.state.currCoin} />}
                 <button onClick={this.handleClick}>Toss!</button>
                 <p>
                    Yapilan toplam firlatma {this.state.nFlips}, bunlarin {' '}
-                    {this.state.nTails} ve {this.state.nHeads} tanesi de turadir.  
+                    {this.state.nHeads} tanesi yazı ve {this.state.nTails} tanesi de turadir.  
                 </p>
             </div>
         )
